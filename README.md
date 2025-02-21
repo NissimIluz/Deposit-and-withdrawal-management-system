@@ -12,6 +12,7 @@ Base URL: https://localhost:7104
 in appsettings.json change ConnectionStrings.DefaultConnection 
 
 create Transactions table
+
 `CREATE TABLE Transactions (
     Id INT IDENTITY(1,1) PRIMARY KEY,
     UserId NVARCHAR(100) NOT NULL,
@@ -22,6 +23,7 @@ create Transactions table
     Date DATETIME NOT NULL
 );
 `
+
 
 ## frontend
 A Redux-based transaction management system built with React, Redux Toolkit, and TypeScript. This project allows users to process financial transactions and view their transaction history.
