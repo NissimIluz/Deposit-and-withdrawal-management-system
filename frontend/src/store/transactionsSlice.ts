@@ -7,14 +7,15 @@ interface Transaction {
   fullNameHebrew: string;
   fullNameEnglish: string;
   birthDate: string;
-  idNumber: string;
-  transactionType: "deposit" | "withdraw";
+  userId: string;
+  transactionType: "deposit" | "withdrawal";
   amount: number;
-  accountNumber: string;
+  bankAccount: string;
+  date:string;
+  status:string;
 }
 
 interface TransactionsState {
-  transactions: Transaction[];
   history: Transaction[];
   loading: boolean;
   error: string | null;
@@ -22,7 +23,6 @@ interface TransactionsState {
 }
 
 const initialState: TransactionsState = {
-  transactions: [],
   history: [],
   loading: false,
   error: null,
@@ -77,7 +77,7 @@ const transactionsSlice = createSlice({
       })
       .addCase(processTransaction.fulfilled, (state, action) => {
         state.loading = false;
-        state.transactions.push(action.payload); // ✅ הוספת הפעולה לרשימה
+        state.history.unshift(action.payload); // ✅ הוספת הפעולה לרשימה
       })
       .addCase(processTransaction.rejected, (state, action) => {
         state.loading = false;
@@ -88,7 +88,6 @@ const transactionsSlice = createSlice({
         state.error = null;
       })
       .addCase(loadTransactionHistory.fulfilled, (state, action) => {
-        console.log(action);
         state.loading = false;
         state.history = action.payload;
       })
@@ -103,7 +102,6 @@ const transactionsSlice = createSlice({
 export const setUserIdAndLoadHistory =
   (userId: string) => async (dispatch: AppDispatch, getState: () => RootState) => {
     dispatch(setUserId(userId));
-    debugger;
     if (/^\d{9}$/.test(userId)){
       dispatch(loadTransactionHistory(userId));
     }

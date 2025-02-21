@@ -12,14 +12,13 @@ const schema = yup.object({
   fullNameEnglish: yup.string().matches(/^[A-Za-z\s'’-]+$/, "אנגלית בלבד").max(15).required(),
   birthDate: yup.date().required(),
   userId: yup.string().matches(/^\d{9}$/, "תעודת זהות לא תקינה").required(),
-  transactionType: yup.string().oneOf(["deposit", "withdraw"]).required(),
+  transactionType: yup.string().oneOf(["deposit", "withdrawal"]).required(),
   amount: yup.number().positive().max(9999999999).required(),
   bankAccount: yup.string().matches(/^\d{10}$/, "מספר חשבון לא תקין").required(),
 });
 
 export default function TransactionForm() {
   const dispatch = useDispatch<AppDispatch>();
-  const { history, loading, error } = useSelector((state: RootState) => state.transactions);
   const { register, handleSubmit, formState: { errors } } = useForm({ resolver: yupResolver(schema) });
 
   const [userId, setUserIdState] = useState(""); // Local state for userId
@@ -59,7 +58,7 @@ export default function TransactionForm() {
       <TextField type="date" {...register("birthDate")} fullWidth error={!!errors.birthDate} helperText={errors.birthDate?.message}  />
       <TextField select {...register("transactionType")} label="פעולה" fullWidth >
         <MenuItem value="deposit">הפקדה</MenuItem>
-        <MenuItem value="withdraw">משיכה</MenuItem>
+        <MenuItem value="withdrawal">משיכה</MenuItem>
       </TextField>
       <TextField {...register("amount")} label="סכום" fullWidth error={!!errors.amount} helperText={errors.amount?.message}  />
       <TextField {...register("bankAccount")} label="מספר חשבון" fullWidth error={!!errors.bankAccount} helperText={errors.bankAccount?.message}  />
@@ -68,14 +67,7 @@ export default function TransactionForm() {
         בצע פעולה
       </Button>
 
-      <Typography variant="h6" >היסטוריית עסקאות:</Typography>
-      {loading && <Typography>טוען...</Typography>}
-      {error && <Typography color="error">{error}</Typography>}
-      <List>
-        {history.map((tx, index) => (
-          <ListItem key={index}>{tx.transactionType} - {tx.amount} ש"ח</ListItem>
-        ))}
-      </List>
+     
     </Box>
   );
 }

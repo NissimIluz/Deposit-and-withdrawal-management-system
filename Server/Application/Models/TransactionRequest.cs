@@ -22,7 +22,7 @@ namespace Application.Models
         public string UserId { get; set; }
 
         [Required(ErrorMessage = "סוג הפעולה הוא שדה חובה")]
-        [RegularExpression("^(deposit|withdraw)$", ErrorMessage = "סוג פעולה לא תקין")]
+        [RegularExpression("^[A-Za-z\\s'’-]+$", ErrorMessage = "סוג פעולה לא תקין")]
         public string TransactionType { get; set; }
 
         [Required(ErrorMessage = "סכום הוא שדה חובה")]

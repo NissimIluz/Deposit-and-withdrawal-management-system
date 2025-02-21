@@ -20,7 +20,16 @@ export default function TransactionsList() {
         {history.length > 0 ? (
           history.map((t, i) => (
             <ListItem key={i}> 
-              {t.fullNameHebrew} ביצע {t.transactionType === "deposit" ? "הפקדה" : "משיכה"} בסכום של {t.amount} ₪
+            {new Date(t.date).toLocaleString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit",
+                hour12: false,
+              })}:  
+               {t.fullNameHebrew} ביצע {t.transactionType == "deposit" ? "הפקדה" : "משיכה"} בסכום של {t.amount} ₪
             </ListItem>
           ))
         ) : (

@@ -66,10 +66,13 @@ namespace Infrastructure.Abstractions
             var transaction = new Transaction()
             {
                 UserId = request.UserId,
+                FullNameHebrew = request.FullNameHebrew,
+                FullNameEnglish = request.FullNameEnglish,
                 Type = request.TransactionType,
                 Amount = request.Amount,
                 BankAccount = request.BankAccount,
                 Status = data,
+                BirthDate = request.BirthDate,
                 Date = DateTime.UtcNow
             };
 
